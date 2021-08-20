@@ -1,2 +1,1 @@
-web: echo "starting web process"
-service: npm start
+web: node app.js 
