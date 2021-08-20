@@ -2,13 +2,25 @@ const { check, validationResult } = require('express-validator')
 
 
 exports.validate = [
-    check('name').isLength({min:1}).withMessage("field is required"),
+    check('name')
+    .trim()
+    .isLength({min:1})
+    .withMessage("field is required"),
+
     check('email').isEmail(),
-    check('subject').isLength({min:1}).withMessage("field is required"),
-    check('message').isLength({min:1}).withMessage("field is required"),
+    
+    check('subject')
+    .trim()
+    .isLength({min:1})
+    .withMessage("field is required"),
+    
+    check('message')
+    .trim()
+    .isLength({min:1})
+    .withMessage("field is required"),
 
     (req, res, next) => {
-        const errors = validationResult(req)
+        let errors = validationResult(req)
         if (!errors.isEmpty()) {
           let newError
           errors.errors.forEach( error => {
@@ -16,7 +28,7 @@ exports.validate = [
               errorObj[`${error.param}`] = error.msg
               newError = {...newError, ...errorObj}
           })
-          console.log(newError)
+          errors = newError
           
           res.render('landing', {errors})
         }
