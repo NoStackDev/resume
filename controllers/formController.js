@@ -32,5 +32,5 @@ const sendEmail = async (name, email) => {
     // send mail
     try {
         await transporter.sendMail(message)
-    } catch(err) { console.log(error) }
+    } catch(err) { console.log(err) }
 }
